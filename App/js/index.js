@@ -11,7 +11,6 @@ function btnStart () {
 
 
     $('#modalInicial').modal('show')
-    test()
 }
 
 function test() {
