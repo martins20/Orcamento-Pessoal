@@ -184,6 +184,11 @@ function createOutlay() {
         button.className = 'btn btn-outline-success'
 
         Footer.appendChild(button)
+        
+        //Função do Botão
+        $('#footer').on('click', '#buttonVoltar', function(){
+            $('#modalRegistraDespesa').modal('hide')
+        });
 
         //Criação do Botão Consultar
         let button2 = document.createElement('button')
@@ -195,6 +200,11 @@ function createOutlay() {
         Footer.appendChild(button2)
         
         bd.gravar(despesa)
+
+        //Função do Botão
+        $('#footer').on('click', '#buttonConsultar', function(){
+            window.location.href = 'consulta.html'
+        });
 
         $('#modalRegistraDespesa').modal('show')
 
@@ -222,6 +232,11 @@ function createOutlay() {
 
         Footer.appendChild(button)
 
+        //Função do Botão
+        $('#footer').on('click', '#buttonVoltar', function(){
+            $('#modalRegistraDespesa').modal('hide')
+        });
+
         //Criação do Botão Consultar
         let button2 = document.createElement('button')
         button2.setAttribute('id', 'buttonConsultar')
@@ -230,6 +245,11 @@ function createOutlay() {
         button2.className = 'btn btn-outline-warning'
 
         Footer.appendChild(button2)
+
+        //Função do Botão
+        $('#footer').on('click', '#buttonConsultar', function(){
+            window.location.href = 'consulta.html'
+        });
 
         $('#modalRegistraDespesa').modal('show')
     }
