@@ -74,10 +74,6 @@ class Bd {
 
 
         despesasFiltradas = this.recuperarTodosRegistros ()
-        
-        console.log(despesa)
-
-        console.log(despesasFiltradas)
 
         //ano
         if (despesa.ano != '') {
@@ -114,45 +110,36 @@ class Bd {
 
     remover(id) {
 
-        localStorage.removeItem(id)
-        
-        document.getElementById('modal_titulo').innerHTML = 'Sucesso !'
-        document.getElementById('modal_tituloDiv').className = 'modal-header text-success'
-        document.getElementById('modal_desc').innerHTML = 'Despesa removida com sucesso !'
-        document.getElementById('button').className = 'btn btn-success'
-        document.getElementById('button').innerHTML = 'Voltar'
-        document.getElementById('button').onclick = (() => { window.location.reload() })
-        document.getElementById('closer').onclick = (() => { window.location.reload() })
-        document.getElementById('conteudoModal').onclose = (() => { window.location.reload() })
+        let Titulo = document.getElementById('modal_titulo') 
+        let ClasseTitulo = document.getElementById('modal_tituloDiv')
+        let Descricao = document.getElementById('modal_desc')
+        let Footer = document.getElementById('footer')
 
-    
+        //localStorage.removeItem(id)
+        
+        Titulo.innerHTML = 'Sucesso !'
+        ClasseTitulo.className = 'modal-header text-success'
+        Descricao.innerHTML = 'Despesa removida com sucesso !'
+
+        //Criação do Botão Voltar
+        let button = document.createElement('button')
+        button.setAttribute('id', 'Excluir')
+
+        button.className = 'btn btn-outline-success'
+        button.innerHTML = 'Voltar'
+        button.onclick = (() => {
+            window.location.reload()
+        })
+        
+        Footer.appendChild(button)    
     
         $('#modalRegistraDespesa').modal('show')
+        
     }
 
-    editarDispesa(id) {
+    editarDispesa() {
 
-        localStorage.getItem(id)
-
-        document.getElementById('modal_titulo2').innerHTML = 'Edição !'
-        document.getElementById('modal_tituloDiv2').className = 'modal-header text-warning'
-        document.getElementById('modal_desc2').innerHTML = `selecione o valor que deseja editar :`
-
-        document.getElementById('button1').className = 'btn btn-warning '
-        document.getElementById('button2').className = 'btn btn-warning'
-        document.getElementById('button3').className = 'btn btn-warning'
-        document.getElementById('button4').className = 'btn btn-warning'
-        document.getElementById('button5').className = 'btn btn-warning'
-        document.getElementById('button6').className = 'btn btn-warning'
-
-        document.getElementById('button1').innerHTML = 'Ano'
-        document.getElementById('button2').innerHTML = 'Mes'
-        document.getElementById('button3').innerHTML = 'Dia'
-        document.getElementById('button4').innerHTML = 'Tipo'
-        document.getElementById('button5').innerHTML = 'Valor'
-        document.getElementById('button6').innerHTML = 'Descrição'
-
-        $('#modalEditaDespesa').modal('show')
+        //Condição para mudar o Array
 
     }
 
@@ -161,6 +148,12 @@ class Bd {
 let bd = new Bd ()
 
 function createOutlay() {
+
+    let Titulo = document.getElementById('modal_titulo') 
+    let ClasseTitulo = document.getElementById('modal_tituloDiv')
+    let Descricao = document.getElementById('modal_desc')
+    let Footer = document.getElementById('footer')
+
     let ano = document.getElementById('ano')
     let mes = document.getElementById('mes')
     let dia = document.getElementById('dia')
@@ -179,33 +172,64 @@ function createOutlay() {
 
     if (despesa.validarDados()) {
         
-        document.getElementById('modal_tituloDiv').className = 'modal-header text-success'
-        document.getElementById('modal_titulo').innerHTML = 'Registro inserido com Sucesso !'
-        document.getElementById('modal_desc').innerHTML = 'Despesa cadastrada com sucesso :)'
-        document.getElementById('button').className = 'btn btn-outline-success'
-        document.getElementById('button').innerHTML = 'Voltar'
-        document.getElementById('buttonConsulta').innerHTML = 'Consultar'
-        document.getElementById('buttonConsulta').className = 'btn btn-outline-warning'
+        Titulo.innerHTML = 'Registro inserido com Sucesso !'
+        ClasseTitulo.className = 'modal-header text-success'
+        Descricao.innerHTML = 'Despesa cadastrada com sucesso :)'
+
+        //Criação do Botão Voltar
+        let button = document.createElement('button')
+        button.setAttribute('id', 'buttonVoltar')
+
+        button.innerHTML = 'Voltar'
+        button.className = 'btn btn-outline-success'
+
+        Footer.appendChild(button)
+
+        //Criação do Botão Consultar
+        let button2 = document.createElement('button')
+        button2.setAttribute('id', 'buttonConsultar')
+
+        button2.innerHTML = 'Consultar'
+        button2.className = 'btn btn-outline-warning'
+
+        Footer.appendChild(button2)
+        
         bd.gravar(despesa)
 
         $('#modalRegistraDespesa').modal('show')
 
+    //Apaga os Valores dos Campos
         ano.value = ''
         mes.value = ''
         dia.value = ''
         tipo.value = ''
         descricao.value = ''
         valor.value = ''
+
     } else {
 
-        document.getElementById('modal_titulo').innerHTML = 'Erro'
-        document.getElementById('modal_tituloDiv').className = 'modal-header text-danger'
-        document.getElementById('modal_desc').innerHTML = 'Verifique se todos os campos estão preenchidos corretamente.'
-        document.getElementById('button').className = 'btn btn-outline-danger'
-        document.getElementById('button').innerHTML = 'Voltar e corrigir !'
-        document.getElementById('buttonConsulta').innerHTML = 'Consultar despesas'
-        document.getElementById('buttonConsulta').className = 'btn btn-outline-warning'
+        Titulo.innerHTML = 'Erro'
+        ClasseTitulo.className = 'modal-header text-danger'
+        Descricao.innerHTML = 'Verifique se todos os campos estão preenchidos corretamente.'
 
+
+        //Criação do Botão Voltar
+        let button = document.createElement('button')
+        button.setAttribute('id', 'buttonVoltar')
+
+        button.innerHTML = 'Voltar e corrigir !'
+        button.className = 'btn btn-outline-danger'
+
+        Footer.appendChild(button)
+
+        //Criação do Botão Consultar
+        let button2 = document.createElement('button')
+        button2.setAttribute('id', 'buttonConsultar')
+
+        button2.innerHTML = 'Consultar'
+        button2.className = 'btn btn-outline-warning'
+
+        Footer.appendChild(button2)
 
         $('#modalRegistraDespesa').modal('show')
     }
@@ -319,6 +343,10 @@ function activeSession(algo) {
     
 }
 
-function verConsulta () {
-    window.location.href = './consulta.html'
+function CleanBtn () {
+    const btn1 = document.getElementById('buttonVoltar') 
+    const btn2 = document.getElementById('buttonConsultar')
+
+    btn1.remove()
+    btn2.remove()
 }

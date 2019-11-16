@@ -1,29 +1,4 @@
-function btnStart () { 
-
-    editarModal ()
-    $('#footer').on('click', '#buttonInserir', function(){
-        window.location.href = 'inserirDespesa.html'
-    });
-
-    $('#footer').on('click', '#buttonDespesa', function(){
-        window.location.href = 'consulta.html'
-    });
-
-
-    $('#modalInicial').modal('show')
-}
-
-function test() {
-     
-    let btn1 = document.getElementById('buttonInserir')
-    let btn2 = document.getElementById('buttonDespesa')
-
-    btn1.remove()
-    btn2.remove()
-    
-}
-
-function editarModal () {
+function Modal () {
 
     let titulo = document.getElementById('modal_titulo') 
     let classeTitulo = document.getElementById('modal_tituloDiv')
@@ -52,8 +27,26 @@ function editarModal () {
 
     footer.appendChild(button2)
 
+
+    // Função Modal Dinamico
+    $('#footer').on('click', '#buttonInserir', function(){
+        window.location.href = 'inserirDespesa.html'
+    });
+        
+    $('#footer').on('click', '#buttonDespesa', function(){
+        window.location.href = 'consulta.html'
+    });
+        
+        
+    $('#modalInicial').modal('show')
 }
 
-function clearModal () {
+function Clean () {
+    const btn1 = document.getElementById('buttonDespesa') 
+    const btn2 = document.getElementById('buttonInserir')
 
+    btn1.remove()
+    btn2.remove()
+
+    console.log('Reset')
 }
