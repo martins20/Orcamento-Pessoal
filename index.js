@@ -1,16 +1,16 @@
 function Modal () {
 
-    let titulo = document.getElementById('modal_titulo') 
-    let classeTitulo = document.getElementById('modal_tituloDiv')
-    let descricao = document.getElementById('modal_desc')
-    let footer = document.getElementById('footer')
+    const titulo = document.getElementById('modal_titulo') 
+    const classeTitulo = document.getElementById('modal_tituloDiv')
+    const descricao = document.getElementById('modal_desc')
+    const footer = document.getElementById('footer')
 
-    titulo.innerHTML = 'Oq deseja fazer ?'
+    titulo.innerHTML = '.:. Iniciar .:.'
     classeTitulo.className  = 'modal-header text-primary'
     descricao.innerHTML = 'Selecione a operação que deseja fazer'
 
     //Criação do botão Inserir consulta
-    let button = document.createElement('button')
+    const button = document.createElement('button')
     button.setAttribute('id', 'buttonInserir')
     
     button.className = 'btn btn-outline-primary'
@@ -19,7 +19,7 @@ function Modal () {
     footer.appendChild(button)
     
     //Criação do botão consulta
-    let button2 = document.createElement('button')
+    const button2 = document.createElement('button')
     button2.setAttribute('id', 'buttonDespesa')
 
     button2.className = 'btn btn-outline-warning'

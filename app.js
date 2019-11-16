@@ -9,7 +9,7 @@ class Despesa {
     }
 
     validarDados() {
-        for (let i in this) {
+        for (const i in this) {
             if (this[i] == undefined ||this[i] == ''  ||this[i] == null) {
                 return false
             }
@@ -22,7 +22,7 @@ class Despesa {
 class Bd {
 
     constructor() {
-        let id = localStorage.getItem('id')
+        const id = localStorage.getItem('id')
 
         if (id === null) {
             localStorage.setItem('id', 0)
@@ -30,13 +30,13 @@ class Bd {
     }
 
     getNextId() {
-        let nextId = localStorage.getItem('id')
+        const nextId = localStorage.getItem('id')
         
         return parseInt(nextId) + 1
     }
 
     gravar(x) {
-        let id = this.getNextId()
+        const id = this.getNextId()
         localStorage.setItem(id, JSON.stringify(x))
 
         localStorage.setItem('id', id)
@@ -44,15 +44,15 @@ class Bd {
 
     recuperarTodosRegistros() {
 
-        let despesas = []
+        const despesas = []
 
-        let id = localStorage.getItem('id')
+        const id = localStorage.getItem('id')
 
         //Recuperar todas as espesas cadastradas em localStorage
-        for (let i = 1; i <= id; i++) {
+        for (const i = 1; i <= id; i++) {
 
             //recuperar despesa
-            let despesa = JSON.parse(localStorage.getItem(i))
+            const despesa = JSON.parse(localStorage.getItem(i))
             
             
             //verificar se existe a possibilidade de haver indices removidos/Retidados 
@@ -70,7 +70,7 @@ class Bd {
 
     pesquisar (despesa) {
         
-        let despesasFiltradas = []
+        const despesasFiltradas = []
 
 
         despesasFiltradas = this.recuperarTodosRegistros ()
@@ -110,10 +110,10 @@ class Bd {
 
     remover(id) {
 
-        let Titulo = document.getElementById('modal_titulo') 
-        let ClasseTitulo = document.getElementById('modal_tituloDiv')
-        let Descricao = document.getElementById('modal_desc')
-        let Footer = document.getElementById('footer')
+        const Titulo = document.getElementById('modal_titulo') 
+        const ClasseTitulo = document.getElementById('modal_tituloDiv')
+        const Descricao = document.getElementById('modal_desc')
+        const Footer = document.getElementById('footer')
 
         //localStorage.removeItem(id)
         
@@ -122,7 +122,7 @@ class Bd {
         Descricao.innerHTML = 'Despesa removida com sucesso !'
 
         //Criação do Botão Voltar
-        let button = document.createElement('button')
+        const button = document.createElement('button')
         button.setAttribute('id', 'Excluir')
 
         button.className = 'btn btn-outline-success'
@@ -145,23 +145,23 @@ class Bd {
 
 }
 
-let bd = new Bd ()
+const bd = new Bd ()
 
 function createOutlay() {
 
-    let Titulo = document.getElementById('modal_titulo') 
-    let ClasseTitulo = document.getElementById('modal_tituloDiv')
-    let Descricao = document.getElementById('modal_desc')
-    let Footer = document.getElementById('footer')
+    const Titulo = document.getElementById('modal_titulo') 
+    const ClasseTitulo = document.getElementById('modal_tituloDiv')
+    const Descricao = document.getElementById('modal_desc')
+    const Footer = document.getElementById('footer')
 
-    let ano = document.getElementById('ano')
-    let mes = document.getElementById('mes')
-    let dia = document.getElementById('dia')
-    let tipo = document.getElementById('tipo')
-    let descricao = document.getElementById('descricao')
-    let valor = document.getElementById('valor')
+    const ano = document.getElementById('ano')
+    const mes = document.getElementById('mes')
+    const dia = document.getElementById('dia')
+    const tipo = document.getElementById('tipo')
+    const descricao = document.getElementById('descricao')
+    const valor = document.getElementById('valor')
 
-    let despesa = new Despesa(
+    const despesa = new Despesa(
         ano.value,
         mes.value,
         dia.value,
@@ -177,7 +177,7 @@ function createOutlay() {
         Descricao.innerHTML = 'Despesa cadastrada com sucesso :)'
 
         //Criação do Botão Voltar
-        let button = document.createElement('button')
+        const button = document.createElement('button')
         button.setAttribute('id', 'buttonVoltar')
 
         button.innerHTML = 'Voltar'
@@ -191,7 +191,7 @@ function createOutlay() {
         });
 
         //Criação do Botão Consultar
-        let button2 = document.createElement('button')
+        const button2 = document.createElement('button')
         button2.setAttribute('id', 'buttonConsultar')
 
         button2.innerHTML = 'Consultar'
@@ -224,7 +224,7 @@ function createOutlay() {
 
 
         //Criação do Botão Voltar
-        let button = document.createElement('button')
+        const button = document.createElement('button')
         button.setAttribute('id', 'buttonVoltar')
 
         button.innerHTML = 'Voltar e corrigir !'
@@ -238,7 +238,7 @@ function createOutlay() {
         });
 
         //Criação do Botão Consultar
-        let button2 = document.createElement('button')
+        const button2 = document.createElement('button')
         button2.setAttribute('id', 'buttonConsultar')
 
         button2.innerHTML = 'Consultar'
@@ -262,7 +262,7 @@ function carregarListaDespesas (despesas = [], filtro = false) {
     }
 
     //Selecionando o elemento tbody da Table
-    let listaDespesas = document.getElementById('listaDespesas')
+    const listaDespesas = document.getElementById('listaDespesas')
     listaDespesas.innerHTML = ''
 
     //Percorrer o Array despesas, listando cada despesas de forma dinâmica
@@ -270,7 +270,7 @@ function carregarListaDespesas (despesas = [], filtro = false) {
         
 
         //Criado a linha (tr)
-        let linha = listaDespesas.insertRow()
+        const linha = listaDespesas.insertRow()
         
         //criar as colunas (td)
         linha.insertCell(0).innerHTML = `${d.dia}/${d.mes}/${d.ano}`
@@ -308,13 +308,13 @@ function carregarListaDespesas (despesas = [], filtro = false) {
 
         //Criar o botão de Exclusão
 
-        let btn = document.createElement('button')
+        const btn = document.createElement('button')
         btn.className = 'btn btn-danger'
         btn.innerHTML = '<i class="fas fa-times"></i>'
         btn.id = `id_despesa_${d.id}`
         btn.onclick = function () {
             //remover a despesa
-            let id = this.id.replace('id_despesa_', '') 
+            const id = this.id.replace('id_despesa_', '') 
 
             bd.remover(id)
             
@@ -324,7 +324,7 @@ function carregarListaDespesas (despesas = [], filtro = false) {
         linha.insertCell(4).append(btn)
 
         // Criar o botão de Edição
-        let btn2 = document.createElement('button')
+        const btn2 = document.createElement('button')
         btn2.className = 'btn btn-danger ml-1'
         btn2.innerHTML = '<i class="fas fa-edit"></i>'
         btn2.id = `id_despesa_${d.id}`
@@ -340,16 +340,16 @@ function carregarListaDespesas (despesas = [], filtro = false) {
 }
 
 function pesquisarDespesa () {
-    let ano = document.getElementById('ano').value
-    let mes = document.getElementById('mes').value
-    let dia = document.getElementById('dia').value
-    let tipo = document.getElementById('tipo').value
-    let descricao = document.getElementById('descricao').value
-    let valor = document.getElementById('valor').value
+    const ano = document.getElementById('ano').value
+    const mes = document.getElementById('mes').value
+    const dia = document.getElementById('dia').value
+    const tipo = document.getElementById('tipo').value
+    const descricao = document.getElementById('descricao').value
+    const valor = document.getElementById('valor').value
 
-    let despesa = new Despesa (ano, mes, dia, tipo, descricao, valor)
+    const despesa = new Despesa (ano, mes, dia, tipo, descricao, valor)
     
-    let despesas = bd.pesquisar(despesa)
+    const despesas = bd.pesquisar(despesa)
 
     this.carregarListaDespesas(despesas , true)
     
