@@ -9,7 +9,7 @@ class Despesa {
     }
 
     validarDados() {
-        for (const i in this) {
+        for (let i in this) {
             if (this[i] == undefined ||this[i] == ''  ||this[i] == null) {
                 return false
             }
@@ -52,7 +52,7 @@ class Bd {
         for (const i = 1; i <= id; i++) {
 
             //recuperar despesa
-            const despesa = JSON.parse(localStorage.getItem(i))
+            let despesa = JSON.parse(localStorage.getItem(i))
             
             
             //verificar se existe a possibilidade de haver indices removidos/Retidados 
