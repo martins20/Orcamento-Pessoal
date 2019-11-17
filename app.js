@@ -8,12 +8,29 @@ class Despesa {
         this.valor = valor
     }
 
-    validarDados() {
+    validarDados(mes) {
+
+        //Validar se todos os campos estão preenchidos
         for (let i in this) {
             if (this[i] == undefined ||this[i] == ''  ||this[i] == null) {
                 return false
             }
         }
+        
+        let dia = document.getElementById('dia')
+
+        //Validar se o campo de dia é valido para o mês
+        for (let i in this) {
+            if (this.dia <=0 || this.dia > 30) {
+                console.log('Função do dia Disparada')
+                dia.value = ''
+                dia.className = 'form-control border-danger text-danger'
+                dia.style.color = 'red'
+                
+                return false
+            }
+        }
+        dia.className = 'form-control'
         return true
     }
 
@@ -22,7 +39,7 @@ class Despesa {
 class Bd {
 
     constructor() {
-        const id = localStorage.getItem('id')
+        let id = localStorage.getItem('id')
 
         if (id === null) {
             localStorage.setItem('id', 0)
@@ -30,13 +47,13 @@ class Bd {
     }
 
     getNextId() {
-        const nextId = localStorage.getItem('id')
+        let nextId = localStorage.getItem('id')
         
         return parseInt(nextId) + 1
     }
 
     gravar(x) {
-        const id = this.getNextId()
+        let id = this.getNextId()
         localStorage.setItem(id, JSON.stringify(x))
 
         localStorage.setItem('id', id)
@@ -44,12 +61,12 @@ class Bd {
 
     recuperarTodosRegistros() {
 
-        const despesas = []
+        let despesas = []
 
-        const id = localStorage.getItem('id')
+        let id = localStorage.getItem('id')
 
         //Recuperar todas as espesas cadastradas em localStorage
-        for (const i = 1; i <= id; i++) {
+        for (let i = 1; i <= id; i++) {
 
             //recuperar despesa
             let despesa = JSON.parse(localStorage.getItem(i))
@@ -70,10 +87,11 @@ class Bd {
 
     pesquisar (despesa) {
         
-        const despesasFiltradas = []
+        let despesasFiltradas = []
 
 
         despesasFiltradas = this.recuperarTodosRegistros ()
+        console.log("Função Pesquisar")
 
         //ano
         if (despesa.ano != '') {
@@ -110,19 +128,19 @@ class Bd {
 
     remover(id) {
 
-        const Titulo = document.getElementById('modal_titulo') 
-        const ClasseTitulo = document.getElementById('modal_tituloDiv')
-        const Descricao = document.getElementById('modal_desc')
-        const Footer = document.getElementById('footer')
+        let Titulo = document.getElementById('modal_titulo') 
+        let ClasseTitulo = document.getElementById('modal_tituloDiv')
+        let Descricao = document.getElementById('modal_desc')
+        let Footer = document.getElementById('footer')
 
-        //localStorage.removeItem(id)
+        localStorage.removeItem(id)
         
         Titulo.innerHTML = 'Sucesso !'
         ClasseTitulo.className = 'modal-header text-success'
         Descricao.innerHTML = 'Despesa removida com sucesso !'
 
         //Criação do Botão Voltar
-        const button = document.createElement('button')
+        let button = document.createElement('button')
         button.setAttribute('id', 'Excluir')
 
         button.className = 'btn btn-outline-success'
@@ -145,23 +163,24 @@ class Bd {
 
 }
 
-const bd = new Bd ()
+let bd = new Bd ()
 
-function createOutlay() {
+function criarDespesa() {
+    console.log('Função Criar despesa')
 
-    const Titulo = document.getElementById('modal_titulo') 
-    const ClasseTitulo = document.getElementById('modal_tituloDiv')
-    const Descricao = document.getElementById('modal_desc')
-    const Footer = document.getElementById('footer')
+    let Titulo = document.getElementById('modal_titulo') 
+    let ClasseTitulo = document.getElementById('modal_tituloDiv')
+    let Descricao = document.getElementById('modal_desc')
+    let Footer = document.getElementById('footer')
 
-    const ano = document.getElementById('ano')
-    const mes = document.getElementById('mes')
-    const dia = document.getElementById('dia')
-    const tipo = document.getElementById('tipo')
-    const descricao = document.getElementById('descricao')
-    const valor = document.getElementById('valor')
+    let ano = document.getElementById('ano')
+    let mes = document.getElementById('mes')
+    let dia = document.getElementById('dia')
+    let tipo = document.getElementById('tipo')
+    let descricao = document.getElementById('descricao')
+    let valor = document.getElementById('valor')
 
-    const despesa = new Despesa(
+    let despesa = new Despesa(
         ano.value,
         mes.value,
         dia.value,
@@ -177,7 +196,7 @@ function createOutlay() {
         Descricao.innerHTML = 'Despesa cadastrada com sucesso :)'
 
         //Criação do Botão Voltar
-        const button = document.createElement('button')
+        let button = document.createElement('button')
         button.setAttribute('id', 'buttonVoltar')
 
         button.innerHTML = 'Voltar'
@@ -191,7 +210,7 @@ function createOutlay() {
         });
 
         //Criação do Botão Consultar
-        const button2 = document.createElement('button')
+        let button2 = document.createElement('button')
         button2.setAttribute('id', 'buttonConsultar')
 
         button2.innerHTML = 'Consultar'
@@ -208,6 +227,7 @@ function createOutlay() {
 
         $('#modalRegistraDespesa').modal('show')
 
+    
     //Apaga os Valores dos Campos
         ano.value = ''
         mes.value = ''
@@ -224,7 +244,7 @@ function createOutlay() {
 
 
         //Criação do Botão Voltar
-        const button = document.createElement('button')
+        let button = document.createElement('button')
         button.setAttribute('id', 'buttonVoltar')
 
         button.innerHTML = 'Voltar e corrigir !'
@@ -238,7 +258,7 @@ function createOutlay() {
         });
 
         //Criação do Botão Consultar
-        const button2 = document.createElement('button')
+        let button2 = document.createElement('button')
         button2.setAttribute('id', 'buttonConsultar')
 
         button2.innerHTML = 'Consultar'
@@ -262,7 +282,7 @@ function carregarListaDespesas (despesas = [], filtro = false) {
     }
 
     //Selecionando o elemento tbody da Table
-    const listaDespesas = document.getElementById('listaDespesas')
+    let listaDespesas = document.getElementById('listaDespesas')
     listaDespesas.innerHTML = ''
 
     //Percorrer o Array despesas, listando cada despesas de forma dinâmica
@@ -270,7 +290,7 @@ function carregarListaDespesas (despesas = [], filtro = false) {
         
 
         //Criado a linha (tr)
-        const linha = listaDespesas.insertRow()
+        let linha = listaDespesas.insertRow()
         
         //criar as colunas (td)
         linha.insertCell(0).innerHTML = `${d.dia}/${d.mes}/${d.ano}`
@@ -308,13 +328,13 @@ function carregarListaDespesas (despesas = [], filtro = false) {
 
         //Criar o botão de Exclusão
 
-        const btn = document.createElement('button')
+        let btn = document.createElement('button')
         btn.className = 'btn btn-danger'
         btn.innerHTML = '<i class="fas fa-times"></i>'
         btn.id = `id_despesa_${d.id}`
         btn.onclick = function () {
             //remover a despesa
-            const id = this.id.replace('id_despesa_', '') 
+            let id = this.id.replace('id_despesa_', '') 
 
             bd.remover(id)
             
@@ -324,7 +344,7 @@ function carregarListaDespesas (despesas = [], filtro = false) {
         linha.insertCell(4).append(btn)
 
         // Criar o botão de Edição
-        const btn2 = document.createElement('button')
+        let btn2 = document.createElement('button')
         btn2.className = 'btn btn-danger ml-1'
         btn2.innerHTML = '<i class="fas fa-edit"></i>'
         btn2.id = `id_despesa_${d.id}`
@@ -340,16 +360,16 @@ function carregarListaDespesas (despesas = [], filtro = false) {
 }
 
 function pesquisarDespesa () {
-    const ano = document.getElementById('ano').value
-    const mes = document.getElementById('mes').value
-    const dia = document.getElementById('dia').value
-    const tipo = document.getElementById('tipo').value
-    const descricao = document.getElementById('descricao').value
-    const valor = document.getElementById('valor').value
+    let ano = document.getElementById('ano').value
+    let mes = document.getElementById('mes').value
+    let dia = document.getElementById('dia').value
+    let tipo = document.getElementById('tipo').value
+    let descricao = document.getElementById('descricao').value
+    let valor = document.getElementById('valor').value
 
-    const despesa = new Despesa (ano, mes, dia, tipo, descricao, valor)
+    let despesa = new Despesa (ano, mes, dia, tipo, descricao, valor)
     
-    const despesas = bd.pesquisar(despesa)
+    let despesas = bd.pesquisar(despesa)
 
     this.carregarListaDespesas(despesas , true)
     
@@ -364,9 +384,68 @@ function activeSession(algo) {
 }
 
 function CleanBtn () {
-    const btn1 = document.getElementById('buttonVoltar') 
-    const btn2 = document.getElementById('buttonConsultar')
+    let btn1 = document.getElementById('buttonVoltar') 
+    let btn2 = document.getElementById('buttonConsultar')
 
     btn1.remove()
     btn2.remove()
+}
+
+
+function Change (valor) {
+    let diasMes = 0
+    
+    switch (parseInt(valor)) {
+        case 1:
+            diasMes = 31
+            break;
+        case 2:
+            switch (this.ano) {
+                case this.ano % 4 == 0 && this.ano % 100 != 0 || this.ano % 400 == 0:
+                    console.log('Ano Bissexto')
+                    diasMes = 29
+                    break;
+            
+                default:
+                    diasMes = 28
+                    break;
+            }
+            break;
+        case 3:
+            diasMes = 31
+            break;
+        case 4:
+            diasMes = 30
+            break;
+        case 5:
+            diasMes = 31
+            break;
+        case 6:
+            diasMes = 30
+            break;
+        case 7:
+            diasMes = 31
+            break;
+        case 8:
+            diasMes = 31
+            break;
+        case 9:
+            diasMes = 30
+            break;
+        case 10:
+            diasMes = 31
+            break;
+        case 11:
+            diasMes = 30
+            break;
+        case 12:
+            diasMes = 31
+            break;
+    
+        default:
+            diasMes = null
+            break;
+    } 
+    console.log(diasMes)
+    return diasMes
 }
