@@ -5,7 +5,7 @@ class Despesa {
         this.dia = dia
         this.tipo = tipo
         this.descricao = descricao 
-        this.valor = valor
+        this.valor = parseFloat(valor)
     }
 
     validarDados(mes) {
@@ -20,17 +20,17 @@ class Despesa {
         let dia = document.getElementById('dia')
 
         //Validar se o campo de dia é valido para o mês
-        for (let i in this) {
-            if (this.dia <=0 || this.dia > 30) {
-                console.log('Função do dia Disparada')
-                dia.value = ''
-                dia.className = 'form-control border-danger text-danger'
-                dia.style.color = 'red'
-                
-                return false
-            }
+        Change()
+        if (this.dia <=0 || this.dia > diasMes  ) {
+            console.log('Função do dia Disparada')
+            dia.value = ''
+            dia.className = 'form-control border-danger text-danger'
+            dia.style.color = 'red'
+            return false
         }
+        
         dia.className = 'form-control'
+        dia.style.color = ''
         return true
     }
 
@@ -313,14 +313,14 @@ function carregarListaDespesas (despesas = [], filtro = false) {
                 d.tipo = 'Saúde'
                 break
                 
-                case 5:
-                    d.tipo = 'Transporte'
-                    break
+            case 5:
+                d.tipo = 'Transporte'
+                break
             
                     
-                    default:
-                        break
-                    }
+            default:
+                break
+            }
 
         linha.insertCell(1).innerHTML = d.tipo
         linha.insertCell(2).innerHTML = d.descricao
@@ -392,60 +392,66 @@ function CleanBtn () {
 }
 
 
-function Change (valor) {
-    let diasMes = 0
-    
-    switch (parseInt(valor)) {
+function Change () {
+     let Valor = new Despesa (
+        ano.value,
+        mes.value,
+    )
+
+    let Ano = parseInt(Valor.ano)
+    let Mes = parseInt(Valor.mes)
+    console.log(`Mes: ${Valor.mes}`)
+    console.log(`Ano: ${Valor.ano}`)
+
+    switch (Mes) {
         case 1:
-            diasMes = 31
+            diasMes = `Tem ${31} Dias`
             break;
         case 2:
-            switch (this.ano) {
-                case this.ano % 4 == 0 && this.ano % 100 != 0 || this.ano % 400 == 0:
-                    console.log('Ano Bissexto')
-                    diasMes = 29
-                    break;
-            
-                default:
-                    diasMes = 28
-                    break;
+            if (Ano % 4 == 0 && Ano % 100 != 0 || Ano % 400 == 0) {
+
+                console.log('Ano Bissexto')
+                diasMes = 29
+            } else {
+
+                console.log('Ano Normal')
+                diasMes = 28
             }
-            break;
+            break
         case 3:
             diasMes = 31
-            break;
+            break
         case 4:
             diasMes = 30
-            break;
+            break
         case 5:
             diasMes = 31
-            break;
+            break
         case 6:
             diasMes = 30
-            break;
+            break
         case 7:
             diasMes = 31
-            break;
+            break
         case 8:
             diasMes = 31
-            break;
+            break
         case 9:
             diasMes = 30
-            break;
+            break
         case 10:
             diasMes = 31
-            break;
+            break
         case 11:
             diasMes = 30
-            break;
+            break
         case 12:
             diasMes = 31
-            break;
+            break
     
         default:
-            diasMes = null
-            break;
-    } 
-    console.log(diasMes)
+            break
+    }
+    console.log(`${diasMes} dias.`)
     return diasMes
 }
