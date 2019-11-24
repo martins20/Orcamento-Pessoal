@@ -1,11 +1,11 @@
 class Despesa {
     constructor (ano, mes, dia, tipo, descricao, valor) {
-        this.ano = ano
-        this.mes = mes
-        this.dia = dia
-        this.tipo = tipo
-        this.descricao = descricao 
-        this.valor = parseFloat(valor)
+        ano,
+        mes,
+        dia,
+        tipo,
+        descricao,
+        valor
     }
 
     validarDados(mes) {
@@ -17,25 +17,46 @@ class Despesa {
             }
         }
         
+        
+        //Validar se o campo de dia é valido para o mês
         let dia = document.getElementById('dia')
 
-        //Validar se o campo de dia é valido para o mês
         Change()
-        if (this.dia <=0 || this.dia > diasMes  ) {
+        if (this.dia <=0 || this.dia > diasMes) {
             console.log('Função do dia Disparada')
             dia.value = ''
             dia.className = 'form-control border-danger text-danger'
             dia.style.color = 'red'
             return false
         }
+
+        
+        //Valida se o campo "Valor" é somente numeros
+        let Input = document.getElementById('valor')    
+
+        Money()
+
+        if (isNaN(moeda)) {
+            console.log('Função do dinheiro Disparada')
+            Input.value = ''
+            Input.className = 'form-control border-danger text-danger'
+            Input.style.color = 'red'
+            return false
+        }
+        
         
         dia.className = 'form-control'
         dia.style.color = ''
-        return true
+        Input.className = 'form-control'
+        Input.style.color = ''
+        return true && this.valor
     }
-
+    
 }
 
+console.log('console do valor : ',  this.valor)
+
+// Class Bd serve para o Tratamento do Array, Gravar, Recuperar, Editar e Remover
 class Bd {
 
     constructor() {
@@ -74,6 +95,7 @@ class Bd {
             
             //verificar se existe a possibilidade de haver indices removidos/Retidados 
             if (despesa === null) {
+                console.log('Não achei')
                 continue
             }
 
@@ -179,6 +201,7 @@ function criarDespesa() {
     let tipo = document.getElementById('tipo')
     let descricao = document.getElementById('descricao')
     let valor = document.getElementById('valor')
+    
 
     let despesa = new Despesa(
         ano.value,
@@ -324,7 +347,8 @@ function carregarListaDespesas (despesas = [], filtro = false) {
 
         linha.insertCell(1).innerHTML = d.tipo
         linha.insertCell(2).innerHTML = d.descricao
-        linha.insertCell(3).innerHTML = d.valor
+        d.valor.replace(',', '.')
+        linha.insertCell(3).innerHTML = parseFloat(d.valor).toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})
 
         //Criar o botão de Exclusão
 
@@ -332,6 +356,8 @@ function carregarListaDespesas (despesas = [], filtro = false) {
         btn.className = 'btn btn-danger'
         btn.innerHTML = '<i class="fas fa-times"></i>'
         btn.id = `id_despesa_${d.id}`
+        
+        //Função de Remover
         btn.onclick = function () {
             //remover a despesa
             let id = this.id.replace('id_despesa_', '') 
@@ -366,7 +392,7 @@ function pesquisarDespesa () {
     let tipo = document.getElementById('tipo').value
     let descricao = document.getElementById('descricao').value
     let valor = document.getElementById('valor').value
-
+    valor = valor.replace(',', '.')
     let despesa = new Despesa (ano, mes, dia, tipo, descricao, valor)
     
     let despesas = bd.pesquisar(despesa)
@@ -391,7 +417,7 @@ function CleanBtn () {
     btn2.remove()
 }
 
-
+//Função de Dias dos Meses
 function Change () {
      let Valor = new Despesa (
         ano.value,
@@ -405,7 +431,7 @@ function Change () {
 
     switch (Mes) {
         case 1:
-            diasMes = `Tem ${31} Dias`
+            diasMes = 31
             break;
         case 2:
             if (Ano % 4 == 0 && Ano % 100 != 0 || Ano % 400 == 0) {
@@ -452,6 +478,22 @@ function Change () {
         default:
             break
     }
-    console.log(`${diasMes} dias.`)
+    console.log(`Dias: ${diasMes} dias.`)
     return diasMes
+}
+
+function Money () {
+    let Moeda = new Despesa (
+        valor.value
+    )
+    //Recupera o valor do input
+    let input = document.getElementById('valor').value
+    let cvrs = input.replace(',', '.')
+    
+    //Altera o Valor do Object
+    moeda = Moeda.valor
+    moeda = parseFloat(cvrs)
+
+    console.log(moeda)
+    return moeda
 }
