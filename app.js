@@ -1,11 +1,11 @@
 class Despesa {
     constructor (ano, mes, dia, tipo, descricao, valor) {
-        ano,
-        mes,
-        dia,
-        tipo,
-        descricao,
-        valor
+        this.ano = ano,
+        this.mes = mes,
+        this.dia = dia,
+        this.tipo = tipo,
+        this.descricao = descricao,
+        this.valor = valor
     }
 
     validarDados(mes) {
@@ -49,12 +49,10 @@ class Despesa {
         dia.style.color = ''
         Input.className = 'form-control'
         Input.style.color = ''
-        return true && this.valor
+        return true
     }
     
 }
-
-console.log('console do valor : ',  this.valor)
 
 // Class Bd serve para o Tratamento do Array, Gravar, Recuperar, Editar e Remover
 class Bd {
@@ -299,19 +297,25 @@ function criarDespesa() {
 }
 
 function carregarListaDespesas (despesas = [], filtro = false) {
-
+    
     if (despesas.length === 0  && filtro == false) {
         despesas = bd.recuperarTodosRegistros()
     }
-
+    
     //Selecionando o elemento tbody da Table
     let listaDespesas = document.getElementById('listaDespesas')
     listaDespesas.innerHTML = ''
-
+    
     //Percorrer o Array despesas, listando cada despesas de forma dinâmica
     despesas.forEach(function (d) {
-        
 
+        //substituindo a virgula por ponto e transformando o d.valor em float
+        let concertar = d.valor.replace(',', '.')
+    
+        d.valor = concertar
+        d.valor = parseFloat(d.valor)
+        
+        
         //Criado a linha (tr)
         let linha = listaDespesas.insertRow()
         
@@ -347,8 +351,7 @@ function carregarListaDespesas (despesas = [], filtro = false) {
 
         linha.insertCell(1).innerHTML = d.tipo
         linha.insertCell(2).innerHTML = d.descricao
-        d.valor.replace(',', '.')
-        linha.insertCell(3).innerHTML = parseFloat(d.valor).toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})
+        linha.insertCell(3).innerHTML = d.valor.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})
 
         //Criar o botão de Exclusão
 
@@ -392,8 +395,8 @@ function pesquisarDespesa () {
     let tipo = document.getElementById('tipo').value
     let descricao = document.getElementById('descricao').value
     let valor = document.getElementById('valor').value
-    valor = valor.replace(',', '.')
     let despesa = new Despesa (ano, mes, dia, tipo, descricao, valor)
+    valor = parseFloat(valor)
     
     let despesas = bd.pesquisar(despesa)
 
