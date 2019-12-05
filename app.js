@@ -152,33 +152,45 @@ class Bd {
         let ClasseTitulo = document.getElementById('modal_tituloDiv')
         let Descricao = document.getElementById('modal_desc')
         let Footer = document.getElementById('footer')
-
-        localStorage.removeItem(id)
         
-        Titulo.innerHTML = 'Sucesso !'
+        Titulo.innerHTML = '.: ATENÇÃO :.'
         ClasseTitulo.className = 'modal-header text-success'
-        Descricao.innerHTML = 'Despesa removida com sucesso !'
+        Descricao.innerHTML = 'Você esta prestes a excluir esta despesa, tem certeza ?'
 
-        //Criação do Botão Voltar
+        //Criação do Botão 
+        let button2 = document.createElement('button')
+        button2.setAttribute('id', 'false')
+
+        button2.className = 'btn btn-outline-success'
+        button2.innerHTML = 'Sim'
+        button2.onclick = (() => {
+            localStorage.removeItem(id)
+            window.location.reload()
+        })
+        
+        Footer.appendChild(button2)
+
         let button = document.createElement('button')
-        button.setAttribute('id', 'Excluir')
+        button.setAttribute('id', 'true')
 
-        button.className = 'btn btn-outline-success'
-        button.innerHTML = 'Voltar'
+        button.className = 'btn btn-outline-danger'
+        button.innerHTML = 'Não'
         button.onclick = (() => {
             window.location.reload()
         })
         
-        Footer.appendChild(button)    
+        Footer.appendChild(button)  
+        
     
         $('#modalRegistraDespesa').modal('show')
         
     }
 
-    editarDispesa() {
+    editarDispesa(a) {
 
-        //Condição para mudar o Array
-
+        this.recuperarTodosRegistros()
+        const array = JSON.parse(localStorage.getItem(a))
+        console.log(array)
     }
 
 }
@@ -308,6 +320,11 @@ function carregarListaDespesas (despesas = [], filtro = false) {
     
     //Percorrer o Array despesas, listando cada despesas de forma dinâmica
     despesas.forEach(function (d) {
+        let linha = listaDespesas.insertRow()
+        let data = linha.insertCell(0)
+        let tipo = linha.insertCell(1)
+        let descricao = linha.insertCell(2)
+        let valor = linha.insertCell(3)
 
         //substituindo a virgula por ponto e transformando o d.valor em float
         let concertar = d.valor.replace(',', '.')
@@ -317,10 +334,11 @@ function carregarListaDespesas (despesas = [], filtro = false) {
         
         
         //Criado a linha (tr)
-        let linha = listaDespesas.insertRow()
+        linha.setAttribute('id', `Despesa${d.id}`)
         
         //criar as colunas (td)
-        linha.insertCell(0).innerHTML = `${d.dia}/${d.mes}/${d.ano}`
+        data.innerHTML = `${d.dia}/${d.mes}/${d.ano}`
+        data.className = 'data'
         
         //ajustar tipo
         switch (parseInt(d.tipo)) {
@@ -348,10 +366,16 @@ function carregarListaDespesas (despesas = [], filtro = false) {
             default:
                 break
             }
+        tipo.innerHTML = d.tipo
+        tipo.className = 'tipo'
 
-        linha.insertCell(1).innerHTML = d.tipo
-        linha.insertCell(2).innerHTML = d.descricao
-        linha.insertCell(3).innerHTML = d.valor.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})
+        descricao.innerHTML = d.descricao
+        descricao.className = 'descricao'
+
+        valor.innerHTML = d.valor.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})
+        valor.className = 'valor'
+        
+        
 
         //Criar o botão de Exclusão
 
@@ -365,10 +389,16 @@ function carregarListaDespesas (despesas = [], filtro = false) {
             //remover a despesa
             let id = this.id.replace('id_despesa_', '') 
 
-            bd.remover(id)
-            
-            
+            bd.remover(id)            
         }
+
+        btn.onfocus = (() => {
+            const btn = document.getElementById('false')
+            const btn2 = document.getElementById('true')
+            
+            btn.remove()
+            btn2.remove()
+        })
         
         linha.insertCell(4).append(btn)
 
@@ -379,7 +409,6 @@ function carregarListaDespesas (despesas = [], filtro = false) {
         btn2.id = `id_despesa_${d.id}`
         btn2.onclick = (editar => {
             bd.editarDispesa(d.id)
-            console.log(d.id)
         } )
         
         linha.insertCell(5).append(btn2)
