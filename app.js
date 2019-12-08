@@ -220,6 +220,8 @@ class Bd {
         button1.innerHTML = 'Data'
         button1.onclick = (() => {
             console.log(`Data: ${array.dia}/${array.mes}/${array.ano}`)
+            RemoveEditButton()
+            editModal('Data', `${array.dia}/${array.mes}/${array.ano}`)
         })
         
         Footer.appendChild(button1)
@@ -259,6 +261,8 @@ class Bd {
                 }
 
             console.log(`Tipo: ${array.tipo}`)
+            RemoveEditButton()
+            editModal('Tipo', array.tipo)
         })
         
         Footer.appendChild(button2) 
@@ -271,6 +275,8 @@ class Bd {
         button3.innerHTML = 'descricao'
         button3.onclick = (() => {
             console.log(`Descrição: ${array.descricao}`)
+            RemoveEditButton()
+            editModal('Descrição', array.descricao)
         })
         
         Footer.appendChild(button3)
@@ -283,6 +289,8 @@ class Bd {
         button4.innerHTML = 'valor'
         button4.onclick = (() => {
             console.log(`Valor: ${array.valor}`)
+            RemoveEditButton()
+            editModal('Valor', array.valor)
         })
         
         Footer.appendChild(button4)
@@ -633,6 +641,241 @@ function RemoveEditButton () {
     tipoButton.remove()
     descricaoButton.remove()
     valorButton.remove()
-    
+}
 
+function editModal (nome, valor) {
+
+    const Titulo = document.getElementById('modal_titulo') 
+    const ClasseTitulo = document.getElementById('modal_tituloDiv')
+    const Descricao = document.getElementById('modal_desc')
+    const Footer = document.getElementById('footer')
+    
+    Titulo.innerHTML = `.: Editando | ${nome} | :.`
+    ClasseTitulo.className = 'modal-header text-success'
+
+    
+    
+    switch (nome) {
+        case 'Data':
+            Descricao.innerHTML = ''
+
+            Descricao.className = 'd-flex modal-body '
+
+            //Criação das Caixas
+            const caixaSelecaoDia = document.createElement('input')
+            caixaSelecaoDia.className = 'form-control'
+            caixaSelecaoDia.setAttribute('id', 'dia')
+            caixaSelecaoDia.setAttribute('placeholder', 'Dia')
+        
+            Descricao.appendChild(caixaSelecaoDia)
+
+            const caixaSelecaoMes = document.createElement('select')
+            caixaSelecaoMes.className = 'form-control'
+            caixaSelecaoMes.setAttribute('id', 'mes')
+
+            const mes = document.createElement('option')
+
+            mes.innerHTML = 'Mes'
+            mes.value = ''
+
+            caixaSelecaoMes.appendChild(mes)
+
+            const janeiro = document.createElement('option')
+
+            janeiro.innerHTML = 'Janeiro'
+            janeiro.value = 1
+
+            caixaSelecaoMes.appendChild(janeiro)
+
+            const fevereiro = document.createElement('option')
+
+            fevereiro.innerHTML = 'Fevereiro'
+            fevereiro.value = 2
+
+            caixaSelecaoMes.appendChild(fevereiro)
+
+            const marco = document.createElement('option')
+
+            marco.innerHTML = 'Marco'
+            marco.value = 3
+
+            caixaSelecaoMes.appendChild(marco)
+
+            const abril = document.createElement('option')
+
+            abril.innerHTML = 'Abril'
+            abril.value = 4
+
+            caixaSelecaoMes.appendChild(abril)
+
+            const maio = document.createElement('option')
+
+            maio.innerHTML = 'Maio'
+            maio.value = 5
+
+            caixaSelecaoMes.appendChild(maio)
+
+            const junho = document.createElement('option')
+
+            junho.innerHTML = 'Junho'
+            junho.value = 6
+
+            caixaSelecaoMes.appendChild(junho)
+
+            const julho = document.createElement('option')
+
+            julho.innerHTML = 'Julho'
+            julho.value = 7
+
+            caixaSelecaoMes.appendChild(julho)
+
+            const agosto = document.createElement('option')
+
+            agosto.innerHTML = 'Agosto'
+            agosto.value = 8
+
+            caixaSelecaoMes.appendChild(agosto)
+
+            const setembro = document.createElement('option')
+
+            setembro.innerHTML = 'Setembro'
+            setembro.value = 9
+
+            caixaSelecaoMes.appendChild(setembro)
+
+            const outubro = document.createElement('option')
+
+            outubro.innerHTML = 'Outubro'
+            outubro.value = 10
+
+            caixaSelecaoMes.appendChild(outubro)
+
+            const novembro = document.createElement('option')
+
+            novembro.innerHTML = 'Novembro'
+            novembro.value = 11
+
+            caixaSelecaoMes.appendChild(novembro)
+
+            const dezembro = document.createElement('option')
+
+            dezembro.innerHTML = 'Dezembro'
+            dezembro.value = 12
+
+            caixaSelecaoMes.appendChild(dezembro)
+            
+            
+        
+            Descricao.appendChild(caixaSelecaoMes)
+            
+            const caixaSelecaoAno = document.createElement('input')
+            caixaSelecaoAno.className = 'form-control'
+            caixaSelecaoAno.setAttribute('id', 'ano')
+            caixaSelecaoAno.setAttribute('placeholder', `Ano`)
+        
+            Descricao.appendChild(caixaSelecaoAno)
+            break
+
+        case 'Tipo':
+
+            Descricao.innerHTML = ''
+
+            Descricao.className = 'd-flex modal-body '
+
+            const caixaSelecaoTipo = document.createElement('select')
+            caixaSelecaoTipo.className = 'form-control'
+            caixaSelecaoTipo.setAttribute('id', 'tipo')
+            
+            Descricao.appendChild(caixaSelecaoTipo)
+
+            //Options dos tipos
+
+            const alimentacao = document.createElement('option')
+            const educacao = document.createElement('option')
+            const lazer = document.createElement('option')
+            const saude = document.createElement('option')
+            const transporte = document.createElement('option')
+
+            alimentacao.innerHTML = 'Alimentação'
+            alimentacao.value = 1
+            
+            caixaSelecaoTipo.appendChild(alimentacao)
+            
+            educacao.innerHTML = 'Educação'
+            educacao.value = 2
+            
+            caixaSelecaoTipo.appendChild(educacao)
+
+            lazer.innerHTML = 'Lazer'
+            lazer.value = 3
+            
+            caixaSelecaoTipo.appendChild(lazer)
+
+            saude.innerHTML = 'Saúde'
+            saude.value = 4
+            
+            caixaSelecaoTipo.appendChild(saude)
+
+            transporte.innerHTML = 'Transporte'
+            transporte.value = 5
+            
+            caixaSelecaoTipo.appendChild(transporte)
+            break
+
+        case 'Descrição':
+            Descricao.innerHTML = ''
+
+            Descricao.className = ' modal-body '
+
+            const inputDesc = document.createElement('input')
+            inputDesc.setAttribute('id',  'descricao')
+            inputDesc.innerHTML = 'Descrição'
+            inputDesc.className = 'form-control'
+
+            Descricao.appendChild(inputDesc)
+            break
+
+        case 'Valor':
+
+            Descricao.innerHTML = ''
+            Descricao.className = ' modal-body '
+
+            const inputValor = document.createElement('input')
+            inputValor.className = 'form-control'
+
+            Descricao.appendChild(inputValor)
+            break
+        default:
+            Descricao.className = ''
+            Descricao.innerHTML = ''
+            break
+   }
+
+
+
+    //Criação dos Botões 
+    const button2 = document.createElement('button')
+    button2.setAttribute('id', 'false')
+
+    button2.className = 'btn btn-outline-success'
+    button2.innerHTML = 'Editar'
+    button2.onclick = (() => {
+        //localStorage.removeItem(id)
+        window.location.reload()
+    })
+    
+    Footer.appendChild(button2)
+
+    const button = document.createElement('button')
+    button.setAttribute('id', 'true')
+
+    button.className = 'btn btn-outline-danger'
+    button.innerHTML = 'Cancelar'
+    button.onclick = (() => {
+        window.location.reload()
+    })
+    Footer.appendChild(button)  
+    
+    
+    $('#modalRegistraDespesa').modal('show')
 }
