@@ -23,7 +23,6 @@ class Despesa {
 
         Change()
         if (this.dia <=0 || this.dia > diasMes) {
-            console.log('Função do dia Disparada')
             dia.value = ''
             dia.className = 'form-control border-danger text-danger'
             dia.style.color = 'red'
@@ -37,7 +36,6 @@ class Despesa {
         Money()
 
         if (isNaN(moeda)) {
-            console.log('Função do dinheiro Disparada')
             Input.value = ''
             Input.className = 'form-control border-danger text-danger'
             Input.style.color = 'red'
@@ -93,7 +91,6 @@ class Bd {
             
             //verificar se existe a possibilidade de haver indices removidos/Retidados 
             if (despesa === null) {
-                console.log('Não achei')
                 continue
             }
 
@@ -111,7 +108,6 @@ class Bd {
 
 
         despesasFiltradas = this.recuperarTodosRegistros ()
-        console.log("Função Pesquisar")
 
         //ano
         if (despesa.ano != '') {
@@ -302,7 +298,6 @@ class Bd {
 let bd = new Bd ()
 
 function criarDespesa() {
-    console.log('Função Criar despesa')
 
     let Titulo = document.getElementById('modal_titulo') 
     let ClasseTitulo = document.getElementById('modal_tituloDiv')
@@ -540,9 +535,6 @@ function pesquisarDespesa () {
     let despesas = bd.pesquisar(despesa)
 
     this.carregarListaDespesas(despesas , true)
-    
-    
-
 }
 
 function activeSession(algo) {
@@ -568,8 +560,6 @@ function Change () {
 
     let Ano = parseInt(Valor.ano)
     let Mes = parseInt(Valor.mes)
-    console.log(`Mes: ${Valor.mes}`)
-    console.log(`Ano: ${Valor.ano}`)
 
     switch (Mes) {
         case 1:
@@ -577,12 +567,8 @@ function Change () {
             break;
         case 2:
             if (Ano % 4 == 0 && Ano % 100 != 0 || Ano % 400 == 0) {
-
-                console.log('Ano Bissexto')
                 diasMes = 29
             } else {
-
-                console.log('Ano Normal')
                 diasMes = 28
             }
             break
@@ -620,7 +606,6 @@ function Change () {
         default:
             break
     }
-    console.log(`Dias: ${diasMes} dias.`)
     return diasMes
 }
 
@@ -635,8 +620,6 @@ function Money () {
     //Altera o Valor do Object
     moeda = Moeda.valor
     moeda = parseFloat(cvrs)
-
-    console.log(moeda)
     return moeda
 }
 
@@ -646,8 +629,6 @@ function RemoveEditButton () {
     const tipoButton = document.getElementById('tipobtn')
     const descricaoButton = document.getElementById('descricaobtn')
     const valorButton = document.getElementById('valorbtn')
-
-    console.log('algo')
     dataButton.remove()
     tipoButton.remove()
     descricaoButton.remove()
