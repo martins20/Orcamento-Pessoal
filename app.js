@@ -148,6 +148,15 @@ class Bd {
 
     remover(id) {
 
+        const dataButton = document.getElementById('databtn')
+        const tipoButton = document.getElementById('tipobtn')
+        const descricaoButton = document.getElementById('descricaobtn')
+        const valorButton = document.getElementById('valorbtn')
+
+        if (dataButton && tipoButton && descricaoButton && valorButton) {
+            RemoveEditButton()
+        }
+
         let Titulo = document.getElementById('modal_titulo') 
         let ClasseTitulo = document.getElementById('modal_tituloDiv')
         let Descricao = document.getElementById('modal_desc')
@@ -178,18 +187,113 @@ class Bd {
         button.onclick = (() => {
             window.location.reload()
         })
-        
         Footer.appendChild(button)  
         
-    
+        
         $('#modalRegistraDespesa').modal('show')
         
     }
-
+    
     editarDispesa(a) {
+
+        const buttonResponse = document.getElementById('true')
+        const buttonResponse2 = document.getElementById('false')
+        
+        if (buttonResponse && buttonResponse2) {
+            buttonResponse.remove()
+            buttonResponse2.remove()
+        }
 
         this.recuperarTodosRegistros()
         const array = JSON.parse(localStorage.getItem(a))
+
+        let Titulo = document.getElementById('modal_titulo') 
+        let ClasseTitulo = document.getElementById('modal_tituloDiv')
+        let Descricao = document.getElementById('modal_desc')
+        let Footer = document.getElementById('footer')
+        
+        Titulo.innerHTML = '.: EDIÇÃO :.'
+        ClasseTitulo.className = 'modal-header text-warning'
+        Descricao.innerHTML = 'Por favor, selecione oq deseja editar:'
+
+        //Criação do Botão Data 
+        let button1 = document.createElement('button')
+        button1.setAttribute('id', 'databtn')
+
+        button1.className = 'btn btn-outline-warning'
+        button1.innerHTML = 'Data'
+        button1.onclick = (() => {
+            console.log(`Data: ${array.dia}/${array.mes}/${array.ano}`)
+        })
+        
+        Footer.appendChild(button1)
+
+        //Criação do Botão Tipo
+        let button2 = document.createElement('button')
+        button2.setAttribute('id', 'tipobtn')
+
+        button2.className = 'btn btn-outline-warning'
+        button2.innerHTML = 'Tipo'
+        button2.onclick = (() => {
+
+            switch (parseInt(array.tipo)) {
+                case 1:
+                    array.tipo = 'Alimentação'
+                    break
+                    
+                case 2:
+                    array.tipo = 'Educação'
+                    break
+                    
+                case 3:
+                    array.tipo = 'Lazer'
+                    break
+                        
+                case 4:
+                    array.tipo = 'Saúde'
+                    break
+                        
+                case 5:
+                    array.tipo = 'Transporte'
+                    break
+                    
+                            
+                default:
+                    break
+                }
+
+            console.log(`Tipo: ${array.tipo}`)
+        })
+        
+        Footer.appendChild(button2) 
+        
+        //Criação do Botão descricao 
+        let button3 = document.createElement('button')
+        button3.setAttribute('id', 'descricaobtn')
+
+        button3.className = 'btn btn-outline-warning'
+        button3.innerHTML = 'descricao'
+        button3.onclick = (() => {
+            console.log(`Descrição: ${array.descricao}`)
+        })
+        
+        Footer.appendChild(button3)
+        
+        //Criação do Botão valor 
+        let button4 = document.createElement('button')
+        button4.setAttribute('id', 'valorbtn')
+
+        button4.className = 'btn btn-outline-warning'
+        button4.innerHTML = 'valor'
+        button4.onclick = (() => {
+            console.log(`Valor: ${array.valor}`)
+        })
+        
+        Footer.appendChild(button4)
+
+        $('#modalRegistraDespesa').modal('show')
+
+
         console.log(array)
     }
 
@@ -285,7 +389,7 @@ function criarDespesa() {
 
         Footer.appendChild(button)
 
-        //Função do Botão
+        //Função do BotãoVoltar
         $('#footer').on('click', '#buttonVoltar', function(){
             $('#modalRegistraDespesa').modal('hide')
         });
@@ -299,7 +403,7 @@ function criarDespesa() {
 
         Footer.appendChild(button2)
 
-        //Função do Botão
+        //Função do BotãoConsultar
         $('#footer').on('click', '#buttonConsultar', function(){
             window.location.href = 'consulta.html'
         });
@@ -393,10 +497,10 @@ function carregarListaDespesas (despesas = [], filtro = false) {
         }
 
         btn.onfocus = (() => {
-            const btn = document.getElementById('false')
+            const btn1 = document.getElementById('false')
             const btn2 = document.getElementById('true')
             
-            btn.remove()
+            btn1.remove()
             btn2.remove()
         })
         
@@ -407,9 +511,15 @@ function carregarListaDespesas (despesas = [], filtro = false) {
         btn2.className = 'btn btn-danger ml-1'
         btn2.innerHTML = '<i class="fas fa-edit"></i>'
         btn2.id = `id_despesa_${d.id}`
-        btn2.onclick = (editar => {
+
+        btn2.onclick = function () {
             bd.editarDispesa(d.id)
-        } )
+        }
+
+        btn2.onfocus = function () {
+            RemoveEditButton()
+        }
+
         
         linha.insertCell(5).append(btn2)
     })
@@ -528,4 +638,20 @@ function Money () {
 
     console.log(moeda)
     return moeda
+}
+
+function RemoveEditButton () {
+    
+    const dataButton = document.getElementById('databtn')
+    const tipoButton = document.getElementById('tipobtn')
+    const descricaoButton = document.getElementById('descricaobtn')
+    const valorButton = document.getElementById('valorbtn')
+
+    console.log('algo')
+    dataButton.remove()
+    tipoButton.remove()
+    descricaoButton.remove()
+    valorButton.remove()
+    
+
 }
