@@ -164,7 +164,7 @@ class Bd {
 
         //Criação do Botão 
         let button2 = document.createElement('button')
-        button2.setAttribute('id', 'false')
+        button2.setAttribute('id', 'true')
 
         button2.className = 'btn btn-outline-success'
         button2.innerHTML = 'Sim'
@@ -176,12 +176,14 @@ class Bd {
         Footer.appendChild(button2)
 
         let button = document.createElement('button')
-        button.setAttribute('id', 'true')
+        button.setAttribute('id', 'false')
 
         button.className = 'btn btn-outline-danger'
         button.innerHTML = 'Não'
         button.onclick = (() => {
-            window.location.reload()
+            $('#footer').on('click', '#false', function(){
+                $('#modalRegistraDespesa').modal('hide')
+            });
         })
         Footer.appendChild(button)  
         
@@ -546,17 +548,12 @@ function pesquisarDespesa () {
     let descricao = document.getElementById('descricao').value
     let valor = document.getElementById('valor').value
     let despesa = new Despesa (ano, mes, dia, tipo, descricao, valor)
+
     valor = parseFloat(valor)
-    
     let despesas = bd.pesquisar(despesa)
+    
 
     this.carregarListaDespesas(despesas , true)
-}
-
-function activeSession(algo) {
-//selecionar array da orgigem do butao
-    arrays = bd.recuperarTodosRegistros()
-    
 }
 
 //Função de Dias dos Meses
@@ -637,7 +634,7 @@ function RemoveEditButton () {
     const tipoButton = document.getElementById('tipobtn')
     const descricaoButton = document.getElementById('descricaobtn')
     const valorButton = document.getElementById('valorbtn')
-    
+
     dataButton.remove()
     tipoButton.remove()
     descricaoButton.remove()
