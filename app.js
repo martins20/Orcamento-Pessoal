@@ -21,7 +21,7 @@ class Despesa {
         //Validar se o campo de dia é valido para o mês
         let dia = document.getElementById('dia')
 
-        Change()
+        mesValue()
         if (this.dia <=0 || this.dia > diasMes) {
             dia.value = ''
             dia.className = 'form-control border-danger text-danger'
@@ -307,6 +307,14 @@ let bd = new Bd ()
 
 function criarDespesa() {
 
+    const btn1 = document.getElementById('buttonVoltar') 
+    const btn2 = document.getElementById('buttonConsultar')
+
+    if(btn1 && btn2){
+    btn1.remove()
+    btn2.remove()
+    }
+
     let Titulo = document.getElementById('modal_titulo') 
     let ClasseTitulo = document.getElementById('modal_tituloDiv')
     let Descricao = document.getElementById('modal_desc')
@@ -551,16 +559,8 @@ function activeSession(algo) {
     
 }
 
-function CleanBtn () {
-    let btn1 = document.getElementById('buttonVoltar') 
-    let btn2 = document.getElementById('buttonConsultar')
-
-    btn1.remove()
-    btn2.remove()
-}
-
 //Função de Dias dos Meses
-function Change () {
+function mesValue () {
      let Valor = new Despesa (
         ano.value,
         mes.value,
@@ -637,6 +637,7 @@ function RemoveEditButton () {
     const tipoButton = document.getElementById('tipobtn')
     const descricaoButton = document.getElementById('descricaobtn')
     const valorButton = document.getElementById('valorbtn')
+    
     dataButton.remove()
     tipoButton.remove()
     descricaoButton.remove()
@@ -872,7 +873,9 @@ function editModal (nome, valor) {
     button.className = 'btn btn-outline-danger'
     button.innerHTML = 'Cancelar'
     button.onclick = (() => {
-        window.location.reload()
+        $('#footer').on('click', '#true', function(){
+            $('#modalRegistraDespesa').modal('hide')
+        });
     })
     Footer.appendChild(button)  
     

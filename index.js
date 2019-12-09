@@ -1,4 +1,11 @@
 function Modal () {
+    const buttonDespesa = document.getElementById('buttonDespesa')
+    const buttonInserir = document.getElementById('buttonInserir')
+    
+    if (buttonDespesa && buttonDespesa) {
+        buttonDespesa.remove()
+        buttonInserir.remove()
+    }
 
     const titulo = document.getElementById('modal_titulo') 
     const classeTitulo = document.getElementById('modal_tituloDiv')
@@ -39,14 +46,4 @@ function Modal () {
         
         
     $('#modalInicial').modal('show')
-}
-
-function Clean () {
-    const btn1 = document.getElementById('buttonDespesa') 
-    const btn2 = document.getElementById('buttonInserir')
-
-    btn1.remove()
-    btn2.remove()
-
-    console.log('Reset')
 }
